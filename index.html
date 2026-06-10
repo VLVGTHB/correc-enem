@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R+ Redação ENEM – Correção Inteligente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-50: #e8f8f0;
+    --green-100: #c3edda;
+    --green-200: #86d9b4;
+    --green-400: #2db87a;
+    --green-500: #1da362;
+    --green-600: #158a51;
+    --green-800: #0a5232;
+    --green-900: #053320;
+    --teal-400: #1D9E75;
+    --amber-400: #BA7517;
+    --amber-50: #FAEEDA;
+    --red-400: #E24B4A;
+    --red-50: #FCEBEB;
+    --gray-50: #f8f9f7;
+    --gray-100: #eef0ea;
+    --gray-200: #d4d8cc;
+    --gray-400: #8a8f80;
+    --gray-600: #5a5f52;
+    --gray-800: #2c3028;
+    --bg: #f0f7f2;
+    --card: #ffffff;
+    --text: #1a2018;
+    --text-muted: #5a6654;
+    --border: #d0e8d8;
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--green-500);
+    text-decoration: none;
+  }
+  .nav-logo .logo-icon {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--green-400), var(--teal-400));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: white;
+    font-style: italic;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    transition: color .2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--green-500); }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .avatar {
+    width: 36px; height: 36px;
+    background: var(--green-100);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--green-600);
+    cursor: pointer;
+  }
+
+  /* LAYOUT */
+  .container { max-width: 1200px; margin: 0 auto; padding: 2rem 2rem; }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* HERO BANNER */
+  .hero-banner {
+    background: linear-gradient(135deg, var(--green-500) 0%, var(--teal-400) 100%);
+    border-radius: var(--radius);
+    padding: 2rem 2.5rem;
+    color: white;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-banner::after {
+    content: '';
+    position: absolute;
+    right: -20px; top: -40px;
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+  .hero-banner h1 { font-family: 'DM Serif Display', serif; font-size: 2rem; margin-bottom: .3rem; }
+  .hero-banner p { opacity: .85; font-size: 14px; }
+  .score-big { font-size: 2.8rem; font-weight: 700; }
+
+  /* SCORE BAR */
+  .score-bar-wrap { margin: 1rem 0 0; }
+  .score-bar-track {
+    height: 8px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .score-bar-fill {
+    height: 100%;
+    background: white;
+    border-radius: 99px;
+    transition: width 1s ease;
+  }
+
+  /* GRID LAYOUT */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  /* SUBMISSION AREA */
+  .submit-section { margin-bottom: 2rem; }
+  .submit-section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: .4rem;
+  }
+  .submit-section p { color: var(--text-muted); font-size: 14px; margin-bottom: 1.5rem; }
+
+  .dropzone {
+    border: 2px dashed var(--green-200);
+    border-radius: var(--radius);
+    background: var(--green-50);
+    padding: 2.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all .2s;
+    margin-bottom: 1.5rem;
+  }
+  .dropzone:hover { border-color: var(--green-400); background: var(--green-100); }
+  .dropzone-icon { font-size: 2.5rem; margin-bottom: .8rem; }
+  .dropzone p { color: var(--text-muted); font-size: 14px; }
+  .dropzone strong { color: var(--green-500); }
+
+  .essay-input-wrap { position: relative; }
+  .essay-textarea {
+    width: 100%;
+    min-height: 240px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    font-family: 'Sora', sans-serif;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text);
+    background: var(--card);
+    resize: vertical;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .essay-textarea:focus { border-color: var(--green-400); }
+  .essay-textarea::placeholder { color: var(--gray-400); }
+
+  .topic-input {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: .8rem 1rem;
+    font-family: 'Sora', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--card);
+    outline: none;
+    margin-bottom: 1rem;
+    transition: border-color .2s;
+  }
+  .topic-input:focus { border-color: var(--green-400); }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--green-500), var(--teal-400));
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: .85rem 2rem;
+    font-family: 'Sora', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(29,163,98,.35); }
+  .btn-primary:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+  .btn-secondary {
+    background: var(--card);
+    color: var(--green-500);
+    border: 1.5px solid var(--green-200);
+    border-radius: var(--radius-sm);
+    padding: .7rem 1.4rem;
+    font-family: 'Sora', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-secondary:hover { background: var(--green-50); border-color: var(--green-400); }
+
+  /* COMPETENCY BARS */
+  .comp-item { margin-bottom: 1rem; }
+  .comp-header { display: flex; justify-content: space-between; margin-bottom: .4rem; }
+  .comp-label { font-size: 13px; font-weight: 600; color: var(--text); }
+  .comp-score { font-size: 13px; font-weight: 700; color: var(--green-500); }
+  .comp-track {
+    height: 7px;
+    background: var(--gray-100);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .comp-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--green-400), var(--teal-400));
+    transition: width 1.2s ease;
+  }
+
+  /* HISTORY LIST */
+  .history-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: .15s;
+  }
+  .history-item:hover { padding-left: 6px; }
+  .history-item:last-child { border-bottom: none; }
+  .history-title { font-size: 14px; font-weight: 600; }
+  .history-date { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .score-badge {
+    background: var(--green-50);
+    color: var(--green-600);
+    border-radius: 99px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* LOADING */
+  .loading-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(240,247,242,.92);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .loading-overlay.show { display: flex; }
+  .spinner {
+    width: 56px; height: 56px;
+    border: 4px solid var(--green-100);
+    border-top-color: var(--green-400);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { font-size: 16px; font-weight: 600; color: var(--green-600); text-align: center; }
+  .loading-sub { font-size: 13px; color: var(--text-muted); }
+
+  /* RESULT */
+  .result-section { display: none; }
+  .result-section.show { display: block; animation: fadeUp .5s ease; }
+  @keyframes fadeUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: none; } }
+
+  .result-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .result-header h2 { font-family: 'DM Serif Display', serif; font-size: 1.6rem; }
+
+  .total-score-card {
+    background: linear-gradient(135deg, var(--green-500), var(--teal-400));
+    border-radius: var(--radius);
+    padding: 2rem;
+    color: white;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  .total-score-card .label { font-size: 14px; opacity: .85; margin-bottom: .3rem; }
+  .total-score-card .number { font-family: 'DM Serif Display', serif; font-size: 4rem; line-height: 1; }
+  .total-score-card .max { font-size: 14px; opacity: .7; }
+
+  .comp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: .8rem; margin-bottom: 1.5rem; }
+  .comp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: .8rem;
+    text-align: center;
+  }
+  .comp-card .cn { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: .3rem; }
+  .comp-card .cv { font-size: 1.4rem; font-weight: 700; color: var(--green-500); }
+  .comp-card .cm { font-size: 11px; color: var(--gray-400); }
+
+  .feedback-section { margin-bottom: 1.5rem; }
+  .feedback-section h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    padding-bottom: .5rem;
+    border-bottom: 2px solid var(--green-100);
+    color: var(--green-800);
+  }
+  .feedback-block {
+    background: var(--gray-50);
+    border-left: 3px solid var(--green-400);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1rem;
+    font-size: 14px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    color: var(--text);
+  }
+  .feedback-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--green-500);
+    margin-bottom: .4rem;
+  }
+
+  .tips-card {
+    background: var(--amber-50);
+    border: 1px solid #f0d090;
+    border-radius: var(--radius);
+    padding: 1.2rem 1.5rem;
+  }
+  .tips-card h3 { font-size: 15px; font-weight: 700; color: var(--amber-400); margin-bottom: .8rem; }
+  .tips-card p { font-size: 14px; line-height: 1.7; white-space: pre-wrap; color: var(--gray-800); }
+
+  /* THEMES PAGE */
+  .themes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
+  .theme-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.4rem;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .theme-card:hover { border-color: var(--green-400); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .theme-year {
+    display: inline-block;
+    background: var(--green-50);
+    color: var(--green-600);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: .7rem;
+  }
+  .theme-card h3 { font-size: 14px; font-weight: 700; margin-bottom: .4rem; }
+  .theme-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .comp-grid { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: 1fr; }
+    nav .nav-links { display: none; }
+    .hero-banner h1 { font-size: 1.5rem; }
+  }
+
+  /* CHAR COUNTER */
+  .char-count { font-size: 12px; color: var(--text-muted); text-align: right; margin-top: .4rem; }
+
+  /* TABS */
+  .tabs { display: flex; gap: .5rem; margin-bottom: 1.5rem; }
+  .tab-btn {
+    padding: .5rem 1.2rem;
+    border: 1.5px solid var(--border);
+    border-radius: 99px;
+    background: var(--card);
+    font-family: 'Sora', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: var(--green-50);
+    border-color: var(--green-400);
+    color: var(--green-600);
+  }
+
+  /* UPLOAD */
+  #fileInput { display: none; }
+  .upload-preview {
+    background: var(--green-50);
+    border: 1px solid var(--green-200);
+    border-radius: var(--radius-sm);
+    padding: .8rem 1rem;
+    margin-bottom: 1rem;
+    display: none;
+    align-items: center;
+    gap: .7rem;
+    font-size: 14px;
+  }
+  .upload-preview.show { display: flex; }
+  .upload-preview .file-icon { font-size: 1.5rem; }
+  .upload-preview .file-name { flex:1; font-weight: 600; color: var(--green-700); }
+  .upload-preview .remove-btn { cursor: pointer; color: var(--red-400); font-size: 1.1rem; }
+
+  /* DICAS PAGE */
+  .tips-list { display: flex; flex-direction: column; gap: 1rem; }
+  .tip-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.4rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .tip-number {
+    width: 32px; height: 32px;
+    background: var(--green-400);
+    border-radius: 50%;
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .tip-card h4 { font-size: 15px; font-weight: 700; margin-bottom: .3rem; }
+  .tip-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+  /* error */
+  .error-msg {
+    background: var(--red-50);
+    border: 1px solid #f5b0b0;
+    color: var(--red-400);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    font-size: 14px;
+    margin-bottom: 1rem;
+    display: none;
+  }
+  .error-msg.show { display: block; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('painel')">
+    <div class="logo-icon">R+</div>
+    <span>R+ Redação ENEM</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" class="active" id="nav-painel" onclick="showPage('painel')">Painel</a></li>
+    <li><a href="#" id="nav-nova" onclick="showPage('nova')">Nova Redação</a></li>
+    <li><a href="#" id="nav-temas" onclick="showPage('temas')">Temas ENEM</a></li>
+    <li><a href="#" id="nav-dicas" onclick="showPage('dicas')">Dicas</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="avatar">MS</div>
+  </div>
+</nav>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div>
+    <div class="loading-text">Analisando sua redação...</div>
+    <div class="loading-sub">Isso pode levar alguns segundos ✨</div>
+  </div>
+</div>
+
+<!-- PAINEL -->
+<div class="page active" id="page-painel">
+  <div class="container">
+
+    <div class="hero-banner">
+      <p>Bem-vindo de volta, Maria!</p>
+      <h1>Última Redação: <span id="lastScore">—</span></h1>
+      <div class="score-bar-wrap">
+        <div class="score-bar-track">
+          <div class="score-bar-fill" id="lastScoreBar" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Desempenho por Competência</div>
+        <div id="dashCompetencies">
+          <p style="color:var(--text-muted);font-size:14px;">Envie sua primeira redação para ver seu desempenho.</p>
+        </div>
+        <br>
+        <button class="btn-primary" onclick="showPage('nova')">+ Nova Redação</button>
+      </div>
+      <div class="card">
+        <div class="card-title">Histórico de Redações</div>
+        <div id="historyList">
+          <p style="color:var(--text-muted);font-size:14px;">Nenhuma redação enviada ainda.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NOVA REDAÇÃO -->
+<div class="page" id="page-nova">
+  <div class="container">
+    <div class="submit-section">
+      <h2>Enviar Nova Redação</h2>
+      <p>Digite ou cole sua redação abaixo para receber uma correção detalhada baseada nos critérios do ENEM.</p>
+
+      <div class="tabs">
+        <button class="tab-btn active" id="tabDigitar" onclick="switchTab('digitar')">✏️ Digitar</button>
+        <button class="tab-btn" id="tabUpload" onclick="switchTab('upload')">📎 Enviar arquivo</button>
+      </div>
+
+      <div id="panelDigitar">
+        <input type="text" class="topic-input" id="topicInput" placeholder="Tema da redação (ex: Desafios da educação digital no Brasil)">
+        <div class="essay-input-wrap">
+          <textarea class="essay-textarea" id="essayText" placeholder="Cole ou digite aqui o texto completo da sua redação..." oninput="updateCharCount()"></textarea>
+        </div>
+        <div class="char-count"><span id="charCount">0</span> caracteres</div>
+      </div>
+
+      <div id="panelUpload" style="display:none;">
+        <input type="file" id="fileInput" accept=".txt,.pdf,.doc,.docx" onchange="handleFile(event)">
+        <div class="dropzone" onclick="document.getElementById('fileInput').click()" ondragover="event.preventDefault()" ondrop="handleDrop(event)">
+          <div class="dropzone-icon">📄</div>
+          <p><strong>Clique para selecionar</strong> ou arraste o arquivo aqui</p>
+          <p style="margin-top:.4rem;font-size:12px;">Formatos aceitos: .txt, .pdf, .doc, .docx</p>
+        </div>
+        <div class="upload-preview" id="uploadPreview">
+          <span class="file-icon">📄</span>
+          <span class="file-name" id="fileName"></span>
+          <span class="remove-btn" onclick="removeFile()">✕</span>
+        </div>
+        <input type="text" class="topic-input" id="topicInputUpload" placeholder="Tema da redação (ex: Desafios da educação digital no Brasil)" style="margin-top:1rem;">
+      </div>
+
+      <div class="error-msg" id="errorMsg"></div>
+
+      <div style="margin-top:1.2rem; display:flex; gap:.8rem; flex-wrap:wrap;">
+        <button class="btn-primary" id="btnCorrigir" onclick="corrigirRedacao()">🔍 Corrigir com IA</button>
+        <button class="btn-secondary" onclick="limparFormulario()">Limpar</button>
+      </div>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result-section" id="resultSection">
+      <div class="result-header">
+        <h2>Resultado da Correção</h2>
+        <div style="display:flex;gap:.8rem;">
+          <button class="btn-secondary" onclick="novaCor()">Nova Correção</button>
+          <button class="btn-primary" onclick="window.print()">⬇ Salvar PDF</button>
+        </div>
+      </div>
+
+      <div class="total-score-card">
+        <div class="label">Nota Final ENEM</div>
+        <div class="number" id="totalScore">0</div>
+        <div class="max">/ 1000 pontos</div>
+      </div>
+
+      <div class="comp-grid" id="compGrid"></div>
+
+      <div class="feedback-section">
+        <h3>📝 Feedback Detalhado por Competência</h3>
+        <div id="feedbackBlocks"></div>
+      </div>
+
+      <div class="tips-card" id="tipsCard">
+        <h3>💡 Sugestões de Melhoria</h3>
+        <p id="tipsText"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEMAS -->
+<div class="page" id="page-temas">
+  <div class="container">
+    <div style="margin-bottom:1.5rem;">
+      <h2 style="font-family:'DM Serif Display',serif;font-size:1.8rem;margin-bottom:.4rem;">Temas do ENEM</h2>
+      <p style="color:var(--text-muted);font-size:14px;">Explore os temas de redação dos últimos anos e pratique.</p>
+    </div>
+    <div class="themes-grid">
+      <div class="theme-card" onclick="usarTema('Manipulação do comportamento do usuário pelo controle de dados')">
+        <span class="theme-year">ENEM 2023</span>
+        <h3>Manipulação do comportamento do usuário pelo controle de dados</h3>
+        <p>Questão relacionada à privacidade digital e poder das big techs sobre a sociedade.</p>
+      </div>
+      <div class="theme-card" onclick="usarTema('Desafios para o enfrentamento da invisibilidade do trabalho de cuidado realizado pela mulher no Brasil')">
+        <span class="theme-year">ENEM 2022</span>
+        <h3>Trabalho de cuidado realizado pela mulher no Brasil</h3>
+        <p>Aborda a invisibilidade do trabalho doméstico e de cuidado não remunerado.</p>
+      </div>
+      <div class="theme-card" onclick="usarTema('Invisibilidade e registro civil: garantia de acesso à cidadania no Brasil')">
+        <span class="theme-year">ENEM 2021</span>
+        <h3>Invisibilidade e registro civil no Brasil</h3>
+        <p>Discussão sobre a falta de documentação e exclusão de cidadãos brasileiros.</p>
+      </div>
+      <div class="theme-card" onclick="usarTema('O estigma associado às doenças mentais na sociedade brasileira')">
+        <span class="theme-year">ENEM 2019</span>
+        <h3>Estigma das doenças mentais na sociedade brasileira</h3>
+        <p>Preconceito e desafios no tratamento de transtornos mentais no país.</p>
+      </div>
+      <div class="theme-card" onclick="usarTema('Manipulação do comportamento do usuário pelo controle de dados')">
+        <span class="theme-year">ENEM 2018</span>
+        <h3>Manipulação do comportamento do usuário pelo controle de dados</h3>
+        <p>Reflexo do poder das plataformas digitais na autonomia individual.</p>
+      </div>
+      <div class="theme-card" onclick="usarTema('Desafios para a formação educacional de surdos no Brasil')">
+        <span class="theme-year">ENEM 2017</span>
+        <h3>Desafios para a formação educacional de surdos no Brasil</h3>
+        <p>Inclusão, acessibilidade e educação para pessoas com deficiência auditiva.</p>
+      </div>
+      <div class="theme-card" onclick="usarTema('Caminhos para combater a intolerância religiosa no Brasil')">
+        <span class="theme-year">ENEM 2016</span>
+        <h3>Intolerância religiosa no Brasil</h3>
+        <p>Discriminação e violação de direitos fundamentais por questões de crença.</p>
+      </div>
+      <div class="theme-card" onclick="usarTema('A persistência da violência contra a mulher na sociedade brasileira')">
+        <span class="theme-year">ENEM 2015</span>
+        <h3>Violência contra a mulher na sociedade brasileira</h3>
+        <p>Causas estruturais e consequências da violência de gênero no Brasil.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DICAS -->
+<div class="page" id="page-dicas">
+  <div class="container">
+    <div style="margin-bottom:1.5rem;">
+      <h2 style="font-family:'DM Serif Display',serif;font-size:1.8rem;margin-bottom:.4rem;">Dicas para Tirar 1000</h2>
+      <p style="color:var(--text-muted);font-size:14px;">Estratégias práticas para dominar as 5 competências do ENEM.</p>
+    </div>
+    <div class="tips-list">
+      <div class="tip-card">
+        <div class="tip-number">1</div>
+        <div>
+          <h4>Competência I – Gramática impecável</h4>
+          <p>Revise concordância verbal e nominal, regência e pontuação. Evite vírgula entre sujeito e verbo. Leia seu texto em voz alta para detectar erros.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">2</div>
+        <div>
+          <h4>Competência II – Tese clara na introdução</h4>
+          <p>Apresente uma tese objetiva no final do primeiro parágrafo. Use repertório sociocultural (dados, citações, obras) que seja pertinente ao tema.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">3</div>
+        <div>
+          <h4>Competência III – Argumento forte e coeso</h4>
+          <p>Cada parágrafo deve ter uma ideia central + desenvolvimento + exemplo concreto. Progressão lógica do início ao fim.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">4</div>
+        <div>
+          <h4>Competência IV – Conectivos variados</h4>
+          <p>Use conectivos de causa (pois, porque), consequência (portanto, logo), concessão (embora, apesar de) e adição (além disso, ademais) para conectar parágrafos.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">5</div>
+        <div>
+          <h4>Competência V – Proposta de intervenção completa</h4>
+          <p>Inclua os 5 elementos: Agente + Ação + Modo/Meio + Efeito/Finalidade + Detalhamento. Nunca proponha algo que viole os direitos humanos.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">6</div>
+        <div>
+          <h4>Estrutura ideal: 4 parágrafos</h4>
+          <p>1º Introdução (contexto + tese) → 2º Argumento 1 → 3º Argumento 2 → 4º Conclusão com proposta de intervenção. Mínimo de 7 linhas por parágrafo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API_URL = "https://api.anthropic.com/v1/messages";
+
+const SYSTEM_PROMPT = `Você é um Corretor de Redações Sênior e Especialista em Linguagens, com vasta experiência na análise de textos dissertativo-argumentativos de nível Ensino Médio (15-18 anos), seguindo rigorosos padrões acadêmicos e as diretrizes do ENEM (Exame Nacional do Ensino Médio) ou vestibulares similares. Seu objetivo é fornecer uma avaliação construtiva, detalhada e pedagógica de uma redação escrita por um aluno dessa faixa etária.
+
+Analise a redação com base nos cinco critérios (competências) principais. Para cada critério, forneça uma nota de 0 a 200 pontos (totalizando até 1000) e um feedback específico e acionável.
+
+RESPONDA APENAS EM JSON, sem nenhum texto antes ou depois, sem blocos de código markdown. Formato exato:
+{
+  "c1": { "nota": 0-200, "feedback": "texto detalhado" },
+  "c2": { "nota": 0-200, "feedback": "texto detalhado" },
+  "c3": { "nota": 0-200, "feedback": "texto detalhado" },
+  "c4": { "nota": 0-200, "feedback": "texto detalhado" },
+  "c5": { "nota": 0-200, "feedback": "texto detalhado" },
+  "dicas": "1 a 2 conselhos práticos e prioritários para o aluno melhorar na próxima redação"
+}
+
+Diretrizes por competência:
+C1 - Domínio da Norma Padrão: erros de concordância, regência, pontuação, ortografia, acentuação, crase. No feedback, liste os 3 principais tipos de erro e cite exemplos do texto.
+C2 - Compreensão do Tema e Tipo Textual: abordagem do tema, tese clara, repertório sociocultural pertinente. Avalie clareza da tese e profundidade do repertório.
+C3 - Argumentação e Coerência: consistência, progressão textual, coerência. Identifique o argumento mais forte e o mais fraco, sugira como melhorá-lo.
+C4 - Coesão Textual: conectivos, pronomes, elipses, sinônimos. Destaque um uso excelente e um trecho a melhorar.
+C5 - Proposta de Intervenção: agente + ação + modo/meio + efeito/finalidade + detalhamento. Avalie completude e viabilidade. Verifique respeito aos direitos humanos.`;
+
+let history = JSON.parse(localStorage.getItem('rplus_history') || '[]');
+let currentTab = 'digitar';
+let uploadedText = '';
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const nav = document.getElementById('nav-' + page);
+  if (nav) nav.classList.add('active');
+  if (page === 'painel') renderDashboard();
+  window.scrollTo(0, 0);
+}
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('tabDigitar').className = 'tab-btn' + (tab === 'digitar' ? ' active' : '');
+  document.getElementById('tabUpload').className = 'tab-btn' + (tab === 'upload' ? ' active' : '');
+  document.getElementById('panelDigitar').style.display = tab === 'digitar' ? 'block' : 'none';
+  document.getElementById('panelUpload').style.display = tab === 'upload' ? 'block' : 'none';
+}
+
+function updateCharCount() {
+  const txt = document.getElementById('essayText').value;
+  document.getElementById('charCount').textContent = txt.length;
+}
+
+function handleFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  document.getElementById('fileName').textContent = file.name;
+  document.getElementById('uploadPreview').classList.add('show');
+  const reader = new FileReader();
+  reader.onload = e => { uploadedText = e.target.result; };
+  reader.readAsText(file);
+}
+
+function handleDrop(event) {
+  event.preventDefault();
+  const file = event.dataTransfer.files[0];
+  if (file) {
+    document.getElementById('fileInput').files = event.dataTransfer.files;
+    handleFile({ target: { files: event.dataTransfer.files } });
+  }
+}
+
+function removeFile() {
+  uploadedText = '';
+  document.getElementById('fileInput').value = '';
+  document.getElementById('uploadPreview').classList.remove('show');
+}
+
+function usarTema(tema) {
+  showPage('nova');
+  document.getElementById('topicInput').value = tema;
+  document.getElementById('essayText').focus();
+}
+
+async function corrigirRedacao() {
+  const errorMsg = document.getElementById('errorMsg');
+  errorMsg.classList.remove('show');
+
+  let texto = '';
+  let tema = '';
+
+  if (currentTab === 'digitar') {
+    texto = document.getElementById('essayText').value.trim();
+    tema = document.getElementById('topicInput').value.trim();
+  } else {
+    texto = uploadedText.trim();
+    tema = document.getElementById('topicInputUpload').value.trim();
+  }
+
+  if (!texto || texto.length < 100) {
+    errorMsg.textContent = 'Por favor, insira um texto com pelo menos 100 caracteres.';
+    errorMsg.classList.add('show');
+    return;
+  }
+
+  const userMsg = `${tema ? 'Tema: ' + tema + '\n\n' : ''}Texto da Redação:\n${texto}`;
+
+  document.getElementById('loadingOverlay').classList.add('show');
+  document.getElementById('btnCorrigir').disabled = true;
+  document.getElementById('resultSection').classList.remove('show');
+
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: [{ role: 'user', content: userMsg }]
+      })
+    });
+
+    const data = await res.json();
+    const rawText = data.content.map(i => i.text || '').join('');
+    const clean = rawText.replace(/```json|```/g, '').trim();
+    const result = JSON.parse(clean);
+
+    renderResult(result, tema || 'Redação sem tema');
+    saveHistory(result, tema || 'Redação');
+
+  } catch(err) {
+    errorMsg.textContent = 'Erro ao processar a correção. Verifique sua conexão e tente novamente.';
+    errorMsg.classList.add('show');
+    console.error(err);
+  } finally {
+    document.getElementById('loadingOverlay').classList.remove('show');
+    document.getElementById('btnCorrigir').disabled = false;
+  }
+}
+
+function renderResult(r, tema) {
+  const total = r.c1.nota + r.c2.nota + r.c3.nota + r.c4.nota + r.c5.nota;
+  document.getElementById('totalScore').textContent = total;
+
+  const labels = ['C1 – Gramática', 'C2 – Tema/Tese', 'C3 – Argumentação', 'C4 – Coesão', 'C5 – Proposta'];
+  const keys = ['c1', 'c2', 'c3', 'c4', 'c5'];
+  const compGrid = document.getElementById('compGrid');
+  compGrid.innerHTML = keys.map((k, i) => `
+    <div class="comp-card">
+      <div class="cn">${labels[i]}</div>
+      <div class="cv">${r[k].nota}</div>
+      <div class="cm">/ 200</div>
+    </div>
+  `).join('');
+
+  const fb = document.getElementById('feedbackBlocks');
+  fb.innerHTML = keys.map((k, i) => `
+    <div style="margin-bottom:1.2rem;">
+      <div class="feedback-label">${labels[i]} — ${r[k].nota}/200</div>
+      <div class="feedback-block">${r[k].feedback}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('tipsText').textContent = r.dicas;
+  const rs = document.getElementById('resultSection');
+  rs.classList.add('show');
+  rs.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function saveHistory(r, tema) {
+  const total = r.c1.nota + r.c2.nota + r.c3.nota + r.c4.nota + r.c5.nota;
+  const entry = {
+    id: Date.now(),
+    tema,
+    total,
+    date: new Date().toLocaleDateString('pt-BR'),
+    result: r
+  };
+  history.unshift(entry);
+  if (history.length > 20) history = history.slice(0, 20);
+  localStorage.setItem('rplus_history', JSON.stringify(history));
+  renderDashboard();
+}
+
+function renderDashboard() {
+  const lastScore = document.getElementById('lastScore');
+  const lastBar = document.getElementById('lastScoreBar');
+  const dashComp = document.getElementById('dashCompetencies');
+  const histList = document.getElementById('historyList');
+
+  if (history.length === 0) return;
+
+  const last = history[0];
+  lastScore.textContent = last.total;
+  setTimeout(() => { lastBar.style.width = (last.total / 1000 * 100) + '%'; }, 100);
+
+  const compLabels = ['C1 Gramática', 'C2 Tema', 'C3 Argumentação', 'C4 Coesão', 'C5 Proposta'];
+  const keys = ['c1', 'c2', 'c3', 'c4', 'c5'];
+  dashComp.innerHTML = keys.map((k, i) => `
+    <div class="comp-item">
+      <div class="comp-header">
+        <span class="comp-label">${compLabels[i]}</span>
+        <span class="comp-score">${last.result[k].nota}/200</span>
+      </div>
+      <div class="comp-track">
+        <div class="comp-fill" style="width:${last.result[k].nota / 2}%"></div>
+      </div>
+    </div>
+  `).join('');
+
+  histList.innerHTML = history.slice(0, 6).map(e => `
+    <div class="history-item">
+      <div>
+        <div class="history-title">${e.tema}</div>
+        <div class="history-date">${e.date}</div>
+      </div>
+      <div class="score-badge">${e.total}</div>
+    </div>
+  `).join('');
+}
+
+function novaCor() {
+  document.getElementById('resultSection').classList.remove('show');
+  document.getElementById('essayText').value = '';
+  document.getElementById('topicInput').value = '';
+  updateCharCount();
+  window.scrollTo(0, 0);
+}
+
+function limparFormulario() {
+  document.getElementById('essayText').value = '';
+  document.getElementById('topicInput').value = '';
+  document.getElementById('topicInputUpload').value = '';
+  removeFile();
+  document.getElementById('errorMsg').classList.remove('show');
+  updateCharCount();
+}
+
+renderDashboard();
+</script>
+</body>
+</html>
